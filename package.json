@@ -1,0 +1,24 @@
+{
+  "name": "trem-sa-bend",
+  "version": "1.0.0",
+  "description": "Backend for SA",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "test",
+    "start": "node src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DiogoCunhaaa/trem-sa-bend.git"
+  },
+  "author": "Diogo, Picolli e Joao",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DiogoCunhaaa/trem-sa-bend/issues"
+  },
+  "homepage": "https://github.com/DiogoCunhaaa/trem-sa-bend#readme",
+  "dependencies": {
+    "express": "^5.1.0"
+  }
+}
