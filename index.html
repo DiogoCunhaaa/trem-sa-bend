@@ -1,56 +1,64 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-<head>
-  <meta charset="UTF-8">
-  <title>Frontend Básico</title>
-</head>
-<body>
-  <h1>Usuários</h1>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Frontend Básico</title>
+  </head>
+  <body>
+    <h1>Usuários</h1>
 
-  <ul id="lista"></ul>
+    <ul id="lista"></ul>
 
-  <input id="email" placeholder="Email" />
-  <input id="nome" placeholder="Nome" />
-  <input id="cpf" placeholder="CPF" />
-  <input id="cnh" placeholder="CNH" />
-  <button onclick="adicionarUsuario()">Adicionar</button>
-  <button onclick="carregarUsuarios()">Carregar</button>
+    <input type="email" id="email" placeholder="Email" />
+    <input type="text" id="nome" placeholder="Nome" />
+    <input type="text" id="cpf" placeholder="CPF" />
+    <input type="text" id="cnh" placeholder="CNH" />
+    <input type="password" id="senha" placeholder="Senha"/>
+    <button onclick="adicionarUsuario()">Adicionar</button>
+    <button onclick="carregarUsuarios()">Carregar</button>
 
-  <script>
-    const API_URL = "http://localhost:3333";
+    <script>
+      const API_URL = "http://localhost:3333";
 
-    async function carregarUsuarios() {
-      const res = await fetch(`${API_URL}/usuarios`);
-      const dados = await res.json();
+      async function carregarUsuarios() {
+        const res = await fetch(`${API_URL}/api/users/`);
+        const dados = await res.json();
 
-      const lista = document.getElementById("lista");
-      lista.innerHTML = "";
-      dados.forEach(u => {
-        const li = document.createElement("li");
-        li.textContent = `${u.id_usuario} - ${u.nome_usuario} (${u.email_usuario})`;
-        lista.appendChild(li);
-      });
-    }
+        const lista = document.getElementById("lista");
+        lista.innerHTML = "";
+        dados.forEach((u) => {
+          const li = document.createElement("li");
+          li.textContent = `${u.id_usuario} - ${u.nome_usuario} (${u.email_usuario} - ${u.senha_usuario})`;
+          lista.appendChild(li);
+        });
+      }
 
-    async function adicionarUsuario() {
-      const email = document.getElementById("email").value;
-      const nome = document.getElementById("nome").value;
-      const cpf = document.getElementById("cpf").value;
-      const cnh = document.getElementById("cnh").value;
+      async function adicionarUsuario() {
+        const email = document.getElementById("email").value;
+        const nome = document.getElementById("nome").value;
+        const cpf = document.getElementById("cpf").value;
+        const cnh = document.getElementById("cnh").value;
+        const senha = document.getElementById("senha").value;
 
-      const res = await fetch(`${API_URL}/criar`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email_usuario: email, nome_usuario: nome, cpf_usuario: cpf, cnh_usuario: cnh }),
-      });
+        const res = await fetch(`${API_URL}/api/users/create`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            email_usuario: email,
+            nome_usuario: nome,
+            cpf_usuario: cpf,
+            cnh_usuario: cnh,
+            senha_usuario: senha,
+          }),
+        });
 
-      const resultado = await res.json();
-      alert(resultado.message || resultado.error);
+        const resultado = await res.json();
+        alert(resultado.message || resultado.error);
+
+        carregarUsuarios();
+      }
 
       carregarUsuarios();
-    }
-
-    carregarUsuarios();
-  </script>
-</body>
+    </script>
+  </body>
 </html>
