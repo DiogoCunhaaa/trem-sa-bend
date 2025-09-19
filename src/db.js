@@ -2,7 +2,7 @@ import mysql from "mysql2/promise";
 
 const db = mysql.createPool({
     host: "localhost",
-    user: "diogo",
+    user: "root",
     password: "root",
     database: "sa_db",
     waitForConnections: true,
