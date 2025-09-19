@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/DiogoCunhaaa/trem-sa-bend#readme",
   "dependencies": {
-    "express": "^5.1.0"
+    "express": "^5.1.0",
+    "mysql2": "^3.15.0"
   }
 }
