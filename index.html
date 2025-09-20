@@ -9,13 +9,15 @@
 
     <ul id="lista"></ul>
 
-    <input type="email" id="email" placeholder="Email" />
-    <input type="text" id="nome" placeholder="Nome" />
-    <input type="text" id="cpf" placeholder="CPF" />
-    <input type="text" id="cnh" placeholder="CNH" />
-    <input type="password" id="senha" placeholder="Senha"/>
+    <input type="email" id="email" placeholder="Email" required/>
+    <input type="text" id="nome" placeholder="Nome" required/>
+    <input type="text" id="cpf" placeholder="CPF" required/>
+    <input type="text" id="cnh" placeholder="CNH" required/>
+    <input type="password" id="senha" placeholder="Senha" required/>
     <button onclick="adicionarUsuario()">Adicionar</button>
     <button onclick="carregarUsuarios()">Carregar</button>
+    <input type="number" id="id_delete" placeholder="Deletar" />
+    <button onclick="deletarUsuario()">Deletar</button>
 
     <script>
       const API_URL = "http://localhost:3333";
@@ -55,6 +57,18 @@
         const resultado = await res.json();
         alert(resultado.message || resultado.error);
 
+        carregarUsuarios();
+      }
+
+      async function deletarUsuario() {
+        const id = document.getElementById("id_delete").value;
+
+        const res = await fetch(`${API_URL}/api/users/delete/${id}`, {
+          method: "DELETE",
+        });
+
+        const resultado = await res.json();
+        alert(resultado.message || resultado.error);
         carregarUsuarios();
       }
 
