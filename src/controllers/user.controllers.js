@@ -1,5 +1,6 @@
 //POST
 import db from "../db.js";
+import bcrypt from "bcrypt";
 
 export const createUser = async (req, res) => {
   try {
@@ -21,9 +22,12 @@ export const createUser = async (req, res) => {
       return res.status(400).json({ error: "Preencha todos os campos" });
     }
 
+    const saltRounds = 10;
+    const senha_usuario_hash = await bcrypt.hash(senha_usuario, saltRounds);
+
     const [result] = await db.query(
       "INSERT INTO usuarios (email_usuario, nome_usuario, cpf_usuario, cnh_usuario, senha_usuario) VALUES (? ,? ,?, ?, ?)",
-      [email_usuario, nome_usuario, cpf_usuario, cnh_usuario, senha_usuario]
+      [email_usuario, nome_usuario, cpf_usuario, cnh_usuario, senha_usuario_hash]
     );
 
     res
@@ -31,7 +35,7 @@ export const createUser = async (req, res) => {
       .json({ message: "Usuario criado com sucesso", id: result.insertId });
   } catch (err) {
     console.error(err);
-    res.status(500).send("Erro no servidor");
+    res.status(500).json({ error:"Erro no servidor" });
   }
 };
 
