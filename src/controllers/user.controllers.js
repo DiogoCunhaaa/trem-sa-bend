@@ -38,7 +38,7 @@ export const createUser = async (req, res) => {
       senha_usuario_hash,
     });
 
-    res.status(200).json({ message: "Usuario criado com sucesso", id });
+    res.status(200).json({ message: "Usuário criado com sucesso", id });
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Erro no servidor" });
@@ -61,10 +61,10 @@ export const deleteUser = async (req, res) => {
     const affectedRows = deleteUserById(id);
 
     if (affectedRows === 0) {
-      return res.status(404).json({ error: "Usuarios nao encontrado" });
+      return res.status(404).json({ error: "Usuários nao encontrado" });
     }
 
-    return res.status(200).json({ message: "Usuario deletado com sucesso" });
+    return res.status(200).json({ message: "Usuário deletado com sucesso" });
   } catch (err) {
     console.error(err);
     return res.status(500).json({ error: "Erro no servidor" });
