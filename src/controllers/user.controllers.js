@@ -1,6 +1,11 @@
-//POST
+//user.controller.js
 import db from "../db.js";
 import bcrypt from "bcrypt";
+import {
+  insertUser,
+  getAllUsers,
+  deleteUserById,
+} from "../models/user.models.js";
 
 export const createUser = async (req, res) => {
   try {
@@ -25,24 +30,25 @@ export const createUser = async (req, res) => {
     const saltRounds = 10;
     const senha_usuario_hash = await bcrypt.hash(senha_usuario, saltRounds);
 
-    const [result] = await db.query(
-      "INSERT INTO usuarios (email_usuario, nome_usuario, cpf_usuario, cnh_usuario, senha_usuario) VALUES (? ,? ,?, ?, ?)",
-      [email_usuario, nome_usuario, cpf_usuario, cnh_usuario, senha_usuario_hash]
-    );
+    const id = await insertUser({
+      email_usuario,
+      nome_usuario,
+      cpf_usuario,
+      cnh_usuario,
+      senha_usuario_hash,
+    });
 
-    res
-      .status(200)
-      .json({ message: "Usuario criado com sucesso", id: result.insertId });
+    res.status(200).json({ message: "Usuario criado com sucesso", id });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ error:"Erro no servidor" });
+    res.status(500).json({ error: "Erro no servidor" });
   }
 };
 
 export const listUsers = async (req, res) => {
   try {
-    const [rows] = await db.query("SELECT * FROM usuarios");
-    res.json(rows);
+    const usuarios = await getAllUsers();
+    res.json(usuarios);
   } catch (err) {
     console.error(err);
     res.status(500).send("Erro no servidor");
@@ -52,13 +58,9 @@ export const listUsers = async (req, res) => {
 export const deleteUser = async (req, res) => {
   try {
     const { id } = req.params;
+    const affectedRows = deleteUserById(id);
 
-    const [result] = await db.query(
-      "DELETE FROM usuarios WHERE id_usuario = ?",
-      [id]
-    );
-
-    if (result.affectedRows === 0) {
+    if (affectedRows === 0) {
       return res.status(404).json({ error: "Usuarios nao encontrado" });
     }
 
