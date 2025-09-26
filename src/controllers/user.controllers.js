@@ -78,3 +78,19 @@ export const deleteUser = async (req, res) => {
     return res.status(500).json({ error: "Erro no servidor" });
   }
 };
+
+export const loginUser = async (req, res) => {
+  try {
+    const { email_usuario, senha_usuario } = req.body;
+
+    if (!email_usuario || !senha_usuario) {
+      return res.status(400).json({ error: "Preencha todos os campos" });
+    }
+
+    const user = await getUserByEmail(email_usuario);
+    console.log(user);
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({ error: "Erro no servidor" });
+  }
+};

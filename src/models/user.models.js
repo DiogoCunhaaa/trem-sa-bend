@@ -22,6 +22,14 @@ export const getAllUsers = async () => {
   return rows;
 };
 
+export const getUserByEmail = async (email_usuario) => {
+  const user = await db.query(
+    "SELECT * FROM usuarios WHERE email_usuario = ?",
+    [email_usuario]
+  );
+  return user;
+};
+
 export const deleteUserById = async (id) => {
   const [result] = await db.query("DELETE FROM usuarios WHERE id_usuario = ?", [
     id,
