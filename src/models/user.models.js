@@ -23,7 +23,7 @@ export const getAllUsers = async () => {
 };
 
 export const getUserByEmail = async (email_usuario) => {
-  const user = await db.query(
+  const [user] = await db.query(
     "SELECT * FROM usuarios WHERE email_usuario = ?",
     [email_usuario]
   );

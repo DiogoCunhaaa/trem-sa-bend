@@ -3,6 +3,7 @@ import bcrypt from "bcrypt";
 import {
   insertUser,
   getAllUsers,
+  getUserByEmail,
   deleteUserById,
   validateEmail,
   validatePassword,
