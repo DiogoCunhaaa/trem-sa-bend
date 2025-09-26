@@ -9,8 +9,6 @@ export const insertUser = async (user) => {
     senha_usuario_hash,
   } = user;
 
-  
-
   const [result] = await db.query(
     "INSERT INTO usuarios (email_usuario, nome_usuario, cpf_usuario, cnh_usuario, senha_usuario) VALUES (? ,? ,?, ?, ?)",
     [email_usuario, nome_usuario, cpf_usuario, cnh_usuario, senha_usuario_hash]
@@ -34,4 +32,11 @@ export const deleteUserById = async (id) => {
 export function validateEmail(email_usuario) {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   return emailRegex.test(email_usuario);
+}
+
+export function validatePassword(senha_usuario) {
+  if (senha_usuario.length < 8) {
+    return false;
+  }
+  return true;
 }

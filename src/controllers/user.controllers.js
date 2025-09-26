@@ -5,6 +5,7 @@ import {
   getAllUsers,
   deleteUserById,
   validateEmail,
+  validatePassword,
 } from "../models/user.models.js";
 
 export const createUser = async (req, res) => {
@@ -29,6 +30,9 @@ export const createUser = async (req, res) => {
 
     if (!validateEmail(email_usuario)) {
       return res.status(400).json({ error: "Email inválido" });
+    }
+    if (!validatePassword(senha_usuario)) {
+      return res.status(400).json({ error: "Senha inválida" });
     }
 
     const saltRounds = 10;
