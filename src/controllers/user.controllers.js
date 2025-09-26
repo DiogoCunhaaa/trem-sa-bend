@@ -1,10 +1,10 @@
 //user.controller.js
-import db from "../db.js";
 import bcrypt from "bcrypt";
 import {
   insertUser,
   getAllUsers,
   deleteUserById,
+  validateEmail,
 } from "../models/user.models.js";
 
 export const createUser = async (req, res) => {
@@ -25,6 +25,10 @@ export const createUser = async (req, res) => {
       !senha_usuario
     ) {
       return res.status(400).json({ error: "Preencha todos os campos" });
+    }
+
+    if (!validateEmail(email_usuario)) {
+      return res.status(400).json({ error: "Email inválido" });
     }
 
     const saltRounds = 10;
