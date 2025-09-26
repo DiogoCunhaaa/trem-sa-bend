@@ -10,7 +10,7 @@ export const insertUser = async (user) => {
   } = user;
 
   const [result] = await db.query(
-    "INSERT INTO usuarios (email_usuario, nome_usuario, cpf_usuario, cnh_usuario, senha_usuario) VALUES (? ,? ,?, ?, ?)",
+    "INSERT INTO usuarios (email_usuario, nome_usuario, cpf_usuario, cnh_usuario, senha_usuario) VALUES (?, ?, ?, ?, ?)",
     [email_usuario, nome_usuario, cpf_usuario, cnh_usuario, senha_usuario_hash]
   );
 
@@ -23,11 +23,11 @@ export const getAllUsers = async () => {
 };
 
 export const getUserByEmail = async (email_usuario) => {
-  const [user] = await db.query(
+  const [rows] = await db.query(
     "SELECT * FROM usuarios WHERE email_usuario = ?",
     [email_usuario]
   );
-  return user;
+  return rows[0];
 };
 
 export const deleteUserById = async (id) => {

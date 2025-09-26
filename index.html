@@ -79,8 +79,8 @@
       }
 
       async function login() {
-        const email_login = document.getElementById("email_login");
-        const senha_login = document.getElementById("password_login");
+        const email_login = document.getElementById("email_login").value;
+        const senha_login = document.getElementById("password_login").value;
 
         const res = await fetch (`${API_URL}/api/users/login`, {
           method: "POST",

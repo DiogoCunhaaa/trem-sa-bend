@@ -57,6 +57,7 @@ export const createUser = async (req, res) => {
 export const listUsers = async (req, res) => {
   try {
     const usuarios = await getAllUsers();
+    // usuarios.forEach(u => delete u.senha_usuario);
     res.json(usuarios);
   } catch (err) {
     console.error(err);
@@ -67,10 +68,10 @@ export const listUsers = async (req, res) => {
 export const deleteUser = async (req, res) => {
   try {
     const { id } = req.params;
-    const affectedRows = deleteUserById(id);
+    const affectedRows = await deleteUserById(id);
 
     if (affectedRows === 0) {
-      return res.status(404).json({ error: "Usuários nao encontrado" });
+      return res.status(404).json({ error: "Usuário não encontrado" });
     }
 
     return res.status(200).json({ message: "Usuário deletado com sucesso" });
@@ -89,7 +90,17 @@ export const loginUser = async (req, res) => {
     }
 
     const user = await getUserByEmail(email_usuario);
-    console.log(user);
+
+    if (!user) {
+      return res.status(404).json({ error: "Usuário não encontrado" });
+    }
+
+    const senhaCorreta = await bcrypt.compare(senha_usuario, user.senha_usuario);
+    if (!senhaCorreta) {
+      return res.status(401).json({ error: "Senha incorreta" });
+    }
+
+    return res.status(200).json({ message: "Login realizado com sucesso" });
   } catch (err) {
     console.log(err);
     return res.status(500).json({ error: "Erro no servidor" });
