@@ -19,6 +19,12 @@
     <input type="number" id="id_delete" placeholder="Deletar" />
     <button onclick="deletarUsuario()">Deletar</button>
 
+    <hr>
+
+    <input type="email" id="email_login" placeholder="Email" required />
+    <input type="password" id="password_login" placeholder="Senha" required />
+    <button onclick="login()">Login</button>
+
     <script>
       const API_URL = "http://localhost:3333";
 
@@ -70,6 +76,23 @@
         const resultado = await res.json();
         alert(resultado.message || resultado.error);
         carregarUsuarios();
+      }
+
+      async function login() {
+        const email_login = document.getElementById("email_login");
+        const senha_login = document.getElementById("password_login");
+
+        const res = await fetch (`${API_URL}/api/users/login`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            email_usuario: email_login,
+            senha_usuario: senha_login
+          }),
+        });
+
+        const resultado = await res.json();
+        alert(resultado.message || resultado.error);
       }
 
       carregarUsuarios();
