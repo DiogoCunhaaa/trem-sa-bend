@@ -36,15 +36,3 @@ export const deleteUserById = async (id) => {
   ]);
   return result.affectedRows;
 };
-
-export function validateEmail(email_usuario) {
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  return emailRegex.test(email_usuario);
-}
-
-export function validatePassword(senha_usuario) {
-  if (senha_usuario.length < 8) {
-    return false;
-  }
-  return true;
-}

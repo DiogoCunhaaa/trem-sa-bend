@@ -10,12 +10,17 @@ app.use(
   session({
     secret: "Dioguinho12345",
     resave: false,
-    saveUnitialized: false,
+    saveUninitialized: false,
+    cookie: {
+      maxAge: 1000 * 60 * 60,
+      secure: false,
+    },
   })
 );
 
 app.use(express.json());
 app.use(cors());
+app.use(express.static("./public"));
 
 app.get("/views", (req, res) => {
   req.session.views = (req.session.views || 0) + 1;

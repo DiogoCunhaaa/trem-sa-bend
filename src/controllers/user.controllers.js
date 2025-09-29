@@ -5,9 +5,8 @@ import {
   getAllUsers,
   getUserByEmail,
   deleteUserById,
-  validateEmail,
-  validatePassword,
 } from "../models/user.models.js";
+import { validateEmail, validatePassword } from "../middlewares/middlewares.js";
 
 export const createUser = async (req, res) => {
   try {
@@ -95,14 +94,38 @@ export const loginUser = async (req, res) => {
       return res.status(404).json({ error: "Usuário não encontrado" });
     }
 
-    const senhaCorreta = await bcrypt.compare(senha_usuario, user.senha_usuario);
+    const senhaCorreta = await bcrypt.compare(
+      senha_usuario,
+      user.senha_usuario
+    );
     if (!senhaCorreta) {
       return res.status(401).json({ error: "Senha incorreta" });
     }
 
-    return res.status(200).json({ message: "Login realizado com sucesso" });
+    req.session.user = {
+      id: user.id_usuario,
+      nome: user.nome_usuario,
+      email: user.email_usuario,
+    };
+
+    console.log("Sessão criada:", req.session.user);
+
+    return res
+      .status(200)
+      .json({ message: "Login realizado com sucesso", user: req.session.user });
   } catch (err) {
     console.log(err);
     return res.status(500).json({ error: "Erro no servidor" });
   }
+};
+
+export const logoutUser = async (req, res) => {
+  req.session.destroy((err) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ error: "Erro ao encerrar sessão" });
+    }
+    res.clearCookie("connect.sid");
+    return res.status(200).json({ message: "Logout realizado com sucesso" });
+  });
 };
