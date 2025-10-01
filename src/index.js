@@ -3,6 +3,7 @@ import session from "express-session";
 import cors from "cors";
 import userRoutes from "./routes/user.routes.js";
 import trainRoutes from "./routes/train.routes.js";
+import alertRoutes from "./routes/alert.routes.js";
 
 const app = express();
 
@@ -26,6 +27,7 @@ const port = 3333;
 
 app.use("/api/users", userRoutes);
 app.use("api/train", trainRoutes);
+app.use("api/alertas", alertRoutes);
 
 app.listen(port, () => {
   console.log(`Backend running in http://localhost:${port}`);
