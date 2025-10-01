@@ -6,4 +6,4 @@ const router = Router();
 
 router.get("/", listTrains);
 router.get("/create", createTrain);
-
+router.delete("/delete/:id", authMiddleware, deleteTrain);

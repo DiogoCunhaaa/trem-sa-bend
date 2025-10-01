@@ -1,5 +1,5 @@
 //train.controller.js
-import { getAllTrains, insertTrain } from "../models/train.models.js";
+import { getAllTrains, insertTrain, deleteTrainById } from "../models/train.models.js";
 import {} from "../middlewares/middlewares.js";
 
 export const createTrain = async (req, res) => {
@@ -26,5 +26,21 @@ export const listTrains = async (res) => {
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Erro no servidor" });
+  }
+};
+
+export const deleteTrain = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const affectedRows = deleteTrainById(id);
+
+    if (affectedRows === 0) {
+      return res.status(404).json({ error: "Trem não encontrado " });
+    }
+
+    return res.status(200).json({ message: "Trem deletado com sucesso" });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ error: "Erro no servidor " });
   }
 };
