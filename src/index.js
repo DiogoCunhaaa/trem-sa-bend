@@ -1,8 +1,8 @@
 import express from "express";
 import session from "express-session";
 import cors from "cors";
-
 import userRoutes from "./routes/user.routes.js";
+import trainRoutes from "./routes/train.routes.js";
 
 const app = express();
 
@@ -22,14 +22,10 @@ app.use(express.json());
 app.use(cors());
 app.use(express.static("./public"));
 
-app.get("/views", (req, res) => {
-  req.session.views = (req.session.views || 0) + 1;
-  res.send(`voce visitou ${req.session.views}`);
-});
-
 const port = 3333;
 
 app.use("/api/users", userRoutes);
+app.use("api/train", trainRoutes);
 
 app.listen(port, () => {
   console.log(`Backend running in http://localhost:${port}`);
