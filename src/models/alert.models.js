@@ -1,9 +1,9 @@
 import db from "../db.js";
 
-export const insertAlert = async ({ alert }) => {
+export const insertAlert = async (alert) => {
     const { id_user, tipo_alerta, mensagem_alerta, horario_alerta, nome_alerta } = alert;
     const query = `
-        INSERT INTO alertas (id_user, tipo_alerta, mensagem_alerta, horario_alerta, nome_alerta)
+        INSERT INTO alertas (id_usuario, tipo_alerta, mensagem_alerta, horario_alerta, nome_alerta)
         VALUES (?, ?, ?, ?, ?)
     `;
     const values = [id_user, tipo_alerta, mensagem_alerta, horario_alerta, nome_alerta];
