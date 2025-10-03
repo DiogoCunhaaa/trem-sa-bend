@@ -27,7 +27,7 @@ const port = 3333;
 
 app.use("/api/users", userRoutes);
 app.use("api/train", trainRoutes);
-app.use("api/alertas", alertRoutes);
+app.use("api/alert", alertRoutes);
 
 app.listen(port, () => {
   console.log(`Backend running in http://localhost:${port}`);

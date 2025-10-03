@@ -2,15 +2,23 @@ import { insertAlert, getAllAlerts, DeleteAlert } from "../models/alert.models.j
 
 export const createAlert = async (req, res) => {
     try {
-        const { tipo_alerta, mensagem_alerta, horario_alerta, tilulo_alerta } = req.body;
+        const { tipo_alerta, mensagem_alerta, horario_alerta, nome_alerta } = req.body;
+        const id_user = req.session.user.id;
 
-        if (!tipo_alerta || !mensagem_alerta || !horario_alerta || !tilulo_alerta) {
+        if (!tipo_alerta || !mensagem_alerta || !horario_alerta || !nome_alerta) {
             return res.status(400).json({ error: "Preencha todos os campos" });
         }
 
-        const id = await insertAlert({ tipo_alerta, mensagem_alerta, horario_alerta, tilulo_alerta });
+        const id = await insertAlert({ id_user, tipo_alerta, mensagem_alerta, horario_alerta, nome_alerta });
+        
+        if (!id) {
+            return res.status(500).json({ error: "Falha ao inserir alerta no banco de dados" });
+        }
 
-        return res.status(200).json({ message: "Alerta criado com sucesso" });
+        return res.status(201).json({ 
+            message: "Alerta criado com sucesso",
+            id: id
+        });
     } catch (err) {
         console.error(err);
         return res.status(500).json({ error: "Erro no servidor" });

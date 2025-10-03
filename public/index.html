@@ -29,6 +29,16 @@
 
     <button onclick="logout()">Logout</button>
 
+    <hr />
+
+    <input type="text" id="tipo_alerta" placeholder="Tipo de Alerta" required />
+    <input type="text" id="mensagem_alerta" placeholder="Mensagem do Alerta" required />
+    <input type="time" id="horario_alerta" placeholder="Horário do Alerta" required />
+    <input type="text" id="nome_alerta" placeholder="Nome do Alerta" required />
+    <button onclick="adicionarAlertas()">Adicionar Alerta</button>
+
+    <hr />
+
     <script>
       const API_URL = "http://localhost:3333";
 
@@ -43,6 +53,27 @@
           li.textContent = `${u.id_usuario} - ${u.nome_usuario} ${u.email_usuario} - ${u.senha_usuario}`;
           lista.appendChild(li);
         });
+      }
+
+      async function adicionarAlertas() {
+        const tipo_alerta = document.getElementById("tipo_alerta").value;
+        const mensagem_alerta = document.getElementById("mensagem_alerta").value;
+        const horario_alerta = document.getElementById("horario_alerta").value;
+        const nome_alerta = document.getElementById("nome_alerta").value;
+
+        const res = await fetch(`${API_URL}/api/alert/create`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            tipo_alerta,
+            mensagem_alerta,
+            horario_alerta,
+            nome_alerta,
+          }),
+        });
+
+        const resultado = await res.json();
+        alert(resultado.message || resultado.error);
       }
 
       async function adicionarUsuario() {
