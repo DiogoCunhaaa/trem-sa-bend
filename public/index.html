@@ -7,7 +7,7 @@
   <body>
     <h1>Usuários</h1>
 
-    <ul id="lista"></ul>
+    <ul id="lista_usuarios"></ul>
 
     <input type="email" id="email" placeholder="Email" required />
     <input type="text" id="nome" placeholder="Nome" required />
@@ -31,6 +31,8 @@
 
     <hr />
 
+    <ul id="lista_trens"></ul>
+
     <input type="text" id="modelo" placeholder="Modelo" required />
     <button onclick="adicionarTrem()">Adicionar</button>
 
@@ -50,13 +52,28 @@
 
         const resultado = await res.json();
         alert(resultado.message || resultado.error);
+
+        carregarTrens();
+      }
+
+      async function carregarTrens() {
+        const res = await fetch(`${API_URL}/api/trains/`);
+        const dados = await res.json();
+
+        const lista = document.getElementById("lista_trens");
+        lista.innerHTML = "";
+        dados.forEach((u) => {
+          const li = document.createElement("li");
+          li.textContent = `${u.id_trem} - ${u.modelo_trem}`;
+          lista.appendChild(li);
+        });
       }
 
       async function carregarUsuarios() {
         const res = await fetch(`${API_URL}/api/users/`);
         const dados = await res.json();
 
-        const lista = document.getElementById("lista");
+        const lista = document.getElementById("lista_usuarios");
         lista.innerHTML = "";
         dados.forEach((u) => {
           const li = document.createElement("li");
@@ -130,6 +147,7 @@
       }
 
       carregarUsuarios();
+      carregarTrens();
     </script>
   </body>
 </html>
