@@ -1,4 +1,4 @@
-import db from "./db.js";
+import db from "../db.js";
 
 export const insertAlert = async ({ tipo_alerta, mensagem_alerta, horario_alerta, tilulo_alerta }) => {
     const query = `

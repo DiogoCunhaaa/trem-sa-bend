@@ -1,11 +1,11 @@
 import db from "../db.js";
 
 export const insertTrain = async (train) => {
-  const { modelo_trem } = train;
+  const { modelo_trem, id_user } = train;
 
   const [result] = await db.query(
-    "INSERT INTO trens (modelo_trem) VALUES (?)",
-    [modelo_trem]
+    "INSERT INTO trens (modelo_trem, fk_id_usuario) VALUES (?, ?)",
+    [modelo_trem, id_user]
   );
 
   return result.insertId;

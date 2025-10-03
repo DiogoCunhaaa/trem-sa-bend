@@ -1,24 +1,30 @@
 //train.controller.js
-import { getAllTrains, insertTrain, deleteTrainById } from "../models/train.models.js";
+import session from "express-session";
+import {
+  getAllTrains,
+  insertTrain,
+  deleteTrainById,
+} from "../models/train.models.js";
 
 export const createTrain = async (req, res) => {
   try {
     const { modelo_trem } = req.body;
+    const id_user = req.session.user.id;
 
     if (!modelo_trem) {
       return res.status(400).json({ error: "Preencha todos os campos" });
     }
 
-    const id = await insertTrain({ modelo_trem });
+    const id = await insertTrain({ modelo_trem, id_user });
 
-    return res.status(200).json({ message: "Trem criado com sucesso" });
+    return res.status(200).json({ message: "Trem criado com sucesso", id });
   } catch (err) {
     console.error(err);
     return res.status(500).json({ error: "Erro no servidor" });
   }
 };
 
-export const listTrains = async (res) => {
+export const listTrains = async (req, res) => {
   try {
     const trens = await getAllTrains();
     res.json(trens);
@@ -31,7 +37,7 @@ export const listTrains = async (res) => {
 export const deleteTrain = async (req, res) => {
   try {
     const { id } = req.params;
-    const affectedRows = deleteTrainById(id);
+    const affectedRows = await deleteTrainById(id);
 
     if (affectedRows === 0) {
       return res.status(404).json({ error: "Trem não encontrado " });

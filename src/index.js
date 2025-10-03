@@ -26,8 +26,8 @@ app.use(express.static("./public"));
 const port = 3333;
 
 app.use("/api/users", userRoutes);
-app.use("api/train", trainRoutes);
-app.use("api/alertas", alertRoutes);
+app.use("/api/trains", trainRoutes);
+app.use("/api/alerts", alertRoutes);
 
 app.listen(port, () => {
   console.log(`Backend running in http://localhost:${port}`);

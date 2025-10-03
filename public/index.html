@@ -29,8 +29,28 @@
 
     <button onclick="logout()">Logout</button>
 
+    <hr />
+
+    <input type="text" id="modelo" placeholder="Modelo" required />
+    <button onclick="adicionarTrem()">Adicionar</button>
+
     <script>
       const API_URL = "http://localhost:3333";
+
+      async function adicionarTrem() {
+        const modelo = document.getElementById("modelo").value;
+
+        const res = await fetch(`${API_URL}/api/trains/create`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            modelo_trem: modelo,
+          }),
+        });
+
+        const resultado = await res.json();
+        alert(resultado.message || resultado.error);
+      }
 
       async function carregarUsuarios() {
         const res = await fetch(`${API_URL}/api/users/`);
