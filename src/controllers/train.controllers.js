@@ -1,6 +1,5 @@
 //train.controller.js
 import { getAllTrains, insertTrain, deleteTrainById } from "../models/train.models.js";
-import {} from "../middlewares/middlewares.js";
 
 export const createTrain = async (req, res) => {
   try {

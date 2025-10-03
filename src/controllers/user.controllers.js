@@ -6,7 +6,7 @@ import {
   getUserByEmail,
   deleteUserById,
 } from "../models/user.models.js";
-import { validateEmail, validatePassword } from "../middlewares/middlewares.js";
+import { validateEmail, validatePassword, validateCPF, cleanCPF, } from "../middlewares/middlewares.js";
 
 export const createUser = async (req, res) => {
   try {
@@ -34,6 +34,10 @@ export const createUser = async (req, res) => {
     if (!validatePassword(senha_usuario)) {
       return res.status(400).json({ error: "Senha inválida" });
     }
+    if (!validateCPF(cpf_usuario)) {
+      return res.status(400).json({ error: "Cpf inválido"});
+    }
+    const cpf_limpo = cleanCPF(cpf_usuario);
 
     const saltRounds = 10;
     const senha_usuario_hash = await bcrypt.hash(senha_usuario, saltRounds);
@@ -41,7 +45,7 @@ export const createUser = async (req, res) => {
     const id = await insertUser({
       email_usuario,
       nome_usuario,
-      cpf_usuario,
+      cpf_usuario: cpf_limpo,
       cnh_usuario,
       senha_usuario_hash,
     });
