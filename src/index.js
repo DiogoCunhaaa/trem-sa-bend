@@ -6,6 +6,7 @@ import trainRoutes from "./routes/train.routes.js";
 import alertRoutes from "./routes/alert.routes.js";
 import sensorRoutes from "./routes/sensor.routes.js";
 import notificationsRoutes from "./routes/notification.routes.js";
+import routeRoutes from "./routes/route.routes.js";
 
 const app = express();
 
@@ -31,7 +32,8 @@ app.use("/api/users", userRoutes);
 app.use("/api/trains", trainRoutes);
 app.use("/api/alerts", alertRoutes);
 app.use("/api/sensors", sensorRoutes);
-app.use("/api/notifications", notificationsRoutes)
+app.use("/api/notifications", notificationsRoutes);
+app.use("/api/routes", routeRoutes);
 
 app.listen(port, () => {
   console.log(`Backend running in http://localhost:${port}`);
