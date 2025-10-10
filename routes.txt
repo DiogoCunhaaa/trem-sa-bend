@@ -1,0 +1,32 @@
+//USERS//
+
+http://localhost:3333/api/users/                    -> listar usuarios
+http://localhost:3333/api/users/create              -> criar usuarios
+http://localhost:3333/api/users/delete/:id          -> deletar usuarios pelo id
+http://localhost:3333/api/users/login               -> fazer login 
+http://localhost:3333/api/users/logout              -> fazer logout
+http://localhost:3333/api/users/edit                -> editar usuario
+
+//TRAINS//
+
+http://localhost:3333/api/trains/                   -> listar trens
+http://localhost:3333/api/trains/create             -> criar trens
+http://localhost:3333/api/trains/delete/:id         -> deletar trens pelo id
+
+//SENSORS//
+
+http://localhost:3333/api/sensors/                  -> listar sensores
+http://localhost:3333/api/sensors/create            -> criar sensores
+http://localhost:3333/api/sensors/delete/:id        -> deletar sensores pelo id
+
+//NOTIFICATIONS//
+
+http://localhost:3333/api/notifications/            -> listar notificacoes
+http://localhost:3333/api/notifications/create      -> criar notificacoes
+http://localhost:3333/api/notifications/delete/:id  -> deletar notificacoes pelo id
+
+//ALERTS//
+
+http://localhost:3333/api/alerts/                   -> listar alertas
+http://localhost:3333/api/alerts/create             -> criar alertas
+http://localhost:3333/api/alerts/delete/:id         -> deletar alertas pelo id

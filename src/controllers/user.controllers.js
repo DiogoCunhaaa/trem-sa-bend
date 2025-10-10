@@ -154,7 +154,7 @@ export const editUser = async (req, res) => {
     const saltRounds = 10;
     const senha_usuario_hash = await bcrypt.hash(senha_usuario, saltRounds);
 
-    const affectedRows = await editUserById(id, {
+    const affectedRows = await editgUserById(id, {
       nome_usuario,
       senha_usuario: senha_usuario_hash,
     });
