@@ -5,5 +5,3 @@ node_modules/
 .npm/
 
 .vscode/
-
-routes.http
