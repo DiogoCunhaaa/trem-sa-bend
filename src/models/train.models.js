@@ -20,9 +20,3 @@ export const deleteTrainById = async (id) => {
   const [result] = await db.query("DELETE FROM trens WHERE id_trem = ?", [id]);
   return result.affectedRows;
 };
-
-export const editTrainById = async (id, train) => {
-  const [result] = await db.query("UPDATE trens SET modelo_trem = ?, fk_id_usuario = ? WHERE id_trem = ? ",
-    []
-  )
-}
