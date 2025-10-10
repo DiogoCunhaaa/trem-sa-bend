@@ -3,7 +3,7 @@ import {
   listNotifications,
   createNotification,
   deleteNotification,
-} from "../controllers/notification.controllers.js";
+} from "../controllers/notification.controller.js";
 import { authMiddleware } from "../middlewares/middlewares.js";
 
 const router = Router();

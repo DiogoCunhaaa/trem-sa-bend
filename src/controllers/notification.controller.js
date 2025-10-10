@@ -39,7 +39,7 @@ export const listNotifications = async (_req, res) => {
   }
 };
 
-export const deleteSensor = async (req, res) => {
+export const deleteNotification = async (req, res) => {
   try {
     const { id } = req.params;
     const affectedRows = await deleteNotificationById(id);
