@@ -6,7 +6,12 @@ import {
   getUserByEmail,
   deleteUserById,
 } from "../models/user.models.js";
-import { validateEmail, validatePassword, validateCPF, cleanCPF, } from "../middlewares/middlewares.js";
+import {
+  validateEmail,
+  validatePassword,
+  validateCPF,
+  cleanCPF,
+} from "../middlewares/middlewares.js";
 
 export const createUser = async (req, res) => {
   try {
@@ -35,7 +40,7 @@ export const createUser = async (req, res) => {
       return res.status(400).json({ error: "Senha inválida" });
     }
     if (!validateCPF(cpf_usuario)) {
-      return res.status(400).json({ error: "Cpf inválido"});
+      return res.status(400).json({ error: "Cpf inválido" });
     }
     const cpf_limpo = cleanCPF(cpf_usuario);
 
@@ -132,4 +137,43 @@ export const logoutUser = async (req, res) => {
     res.clearCookie("connect.sid");
     return res.status(200).json({ message: "Logout realizado com sucesso" });
   });
+};
+
+export const editUser = async (req, res) => {
+  try {
+    const id = req.session.user?.id;
+    if (!id) {
+      return res.status(401).json({ error: "Usuário não autenticado" });
+    }
+    const { nome_usuario, senha_usuario } = req.body;
+
+    if (!nome_usuario || !senha_usuario) {
+      return res.status(400).json({ error: "Preencha todos os campos" });
+    }
+
+    const saltRounds = 10;
+    const senha_usuario_hash = await bcrypt.hash(senha_usuario, saltRounds);
+
+    const affectedRows = await editUserById(id, {
+      nome_usuario,
+      senha_usuario: senha_usuario_hash,
+    });
+
+    if (affectedRows > 0) {
+      return res
+        .status(200)
+        .json({ message: "Usuário atualizado com sucesso" });
+    } else {
+      return res.status(404).json({ error: "Usuário não encontrado" });
+    }
+  } catch (err) {
+    if (err.code === "ER_DUP_ENTRY") {
+      return res
+        .status(400)
+        .json({ error: "Você não tem permissão para editar outros usuários" });
+    }
+
+    console.error(err);
+    return res.status(500).json({ error: "Erro no servidor" });
+  }
 };
