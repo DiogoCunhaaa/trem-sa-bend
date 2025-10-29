@@ -57,8 +57,12 @@ export const createUser = async (req, res) => {
 
     res.status(200).json({ message: "Usuário criado com sucesso", id });
   } catch (err) {
+    if (err.code === "ER_DUP_ENTRY") {
+      return res.status(400).json({ error: "Email/CPF/CNH já existentes" });
+    }
+
     console.error(err);
-    res.status(500).json({ error: "Erro no servidor" });
+    return res.status(500).json({ error: "Erro no servidor" });
   }
 };
 
