@@ -14,6 +14,7 @@ import {
 } from "../middlewares/middlewares.js";
 
 export const createUser = async (req, res) => {
+  console.log(`${new Date().toISOString()} POST createUser chamado`);
   try {
     const {
       email_usuario,
@@ -67,17 +68,20 @@ export const createUser = async (req, res) => {
 };
 
 export const listUsers = async (req, res) => {
+  console.log(`${new Date().toISOString()} GET listUsers chamado`);
   try {
     const usuarios = await getAllUsers();
+    console.log(`${usuarios.length} usuários retornados`);
     // usuarios.forEach(u => delete u.senha_usuario);
-    res.json(usuarios);
+    res.json(usuarios); 
   } catch (err) {
-    console.error(err);
-    res.status(500).send("Erro no servidor");
+    console.error("Erro em listUsers:", err);
+    return res.status(500).json({ error: "Erro no servidor" });
   }
 };
 
 export const deleteUser = async (req, res) => {
+  console.log(`${new Date().toISOString()} DELETE deleteUser chamado`);
   try {
     const { id } = req.params;
     const affectedRows = await deleteUserById(id);
@@ -94,6 +98,7 @@ export const deleteUser = async (req, res) => {
 };
 
 export const loginUser = async (req, res) => {
+  console.log(`${new Date().toISOString()} POST loginUser chamado`);
   try {
     const { email_usuario, senha_usuario } = req.body;
 
@@ -133,6 +138,7 @@ export const loginUser = async (req, res) => {
 };
 
 export const logoutUser = async (req, res) => {
+  console.log(`${new Date().toISOString()} POST logoutUser chamado`);
   req.session.destroy((err) => {
     if (err) {
       console.error(err);
@@ -144,6 +150,7 @@ export const logoutUser = async (req, res) => {
 };
 
 export const editUser = async (req, res) => {
+  console.log(`${new Date().toISOString()} PUT editUser chamado`);
   try {
     const id = req.session.user?.id;
     if (!id) {
