@@ -37,10 +37,17 @@ export const deleteUserById = async (id) => {
   return result.affectedRows;
 };
 
-export const editUserById = async (id, { nome_usuario, senha_usuario }) => {
+export const editUserById = async (id, { nome_usuario, email_usuario, senha_usuario }) => {
   const [result] = await db.query(
-    "UPDATE users SET user_name = ?, user_password = ? WHERE id_users = ?",
+    "UPDATE usuarios SET nome_usuario = ?, senha_usuario = ? WHERE id_usuario = ?",
     [nome_usuario, senha_usuario, id]
   );
   return result.affectedRows;
 };
+
+export const getUserById = async (id) => {
+  const [rows] = await db.query("SELECT * FROM usuarios WHERE id_usuario = ?", 
+    [id]
+  );
+  return rows[0];
+}

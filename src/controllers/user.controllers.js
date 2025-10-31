@@ -5,6 +5,8 @@ import {
   getAllUsers,
   getUserByEmail,
   deleteUserById,
+  editUserById,
+  getUserById
 } from "../models/user.models.js";
 import {
   validateEmail,
@@ -156,17 +158,18 @@ export const editUser = async (req, res) => {
     if (!id) {
       return res.status(401).json({ error: "Usuário não autenticado" });
     }
-    const { nome_usuario, senha_usuario } = req.body;
+    const { nome_usuario, email_usuario, senha_usuario } = req.body;
 
-    if (!nome_usuario || !senha_usuario) {
+    if (!nome_usuario || !senha_usuario || !email_usuario) {
       return res.status(400).json({ error: "Preencha todos os campos" });
     }
 
     const saltRounds = 10;
     const senha_usuario_hash = await bcrypt.hash(senha_usuario, saltRounds);
 
-    const affectedRows = await editgUserById(id, {
+    const affectedRows = await editUserById(id, {
       nome_usuario,
+      email_usuario,
       senha_usuario: senha_usuario_hash,
     });
 
@@ -188,3 +191,22 @@ export const editUser = async (req, res) => {
     return res.status(500).json({ error: "Erro no servidor" });
   }
 };
+
+export const infoUser = async (req, res) => {
+  //console.log(`${new Date(),toISOString()} GET infoUser chamado`);
+  try {
+    const id = 2;
+    if (!id) {
+      return res.status(401).json({ error: "Usuário não autenticado" });
+    }
+    const user = await getUserById(id);
+
+    if (!user) {
+      return res.status(404).json({ error: "Usuário não encontrado" });
+    }
+    return res.status(200).json({ message: "Informações coletadas", user: user });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ error: "Erro no servidor" });
+  }
+}
