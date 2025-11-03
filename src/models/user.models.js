@@ -39,8 +39,16 @@ export const deleteUserById = async (id) => {
 
 export const editUserById = async (id, { nome_usuario, senha_usuario }) => {
   const [result] = await db.query(
-    "UPDATE users SET user_name = ?, user_password = ? WHERE id_users = ?",
+    "UPDATE usuarios SET nome_usuario = ?, senha_usuario = ? WHERE id_usuario = ?",
     [nome_usuario, senha_usuario, id]
+  );
+  return result.affectedRows;
+};
+
+export const updateUserPasswordById = async (id, senha_usuario) => {
+  const [result] = await db.query(
+    "UPDATE usuarios SET senha_usuario = ? WHERE id_usuario = ?",
+    [senha_usuario, id]
   );
   return result.affectedRows;
 };
