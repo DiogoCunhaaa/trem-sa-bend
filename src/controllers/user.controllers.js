@@ -128,7 +128,7 @@ export const loginUser = async (req, res) => {
       email: user.email_usuario,
     };
 
-    console.log("Sessão criada:", req.session.user);
+    console.log("Sessão criada:", req.session);
 
     return res
       .status(200)
