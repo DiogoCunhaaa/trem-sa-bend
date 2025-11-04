@@ -58,7 +58,21 @@ export const createUser = async (req, res) => {
       senha_usuario_hash,
     });
 
-    res.status(200).json({ message: "Usuário criado com sucesso", id });
+    const user = await getUserByEmail(email_usuario);
+
+    if (!user) {
+      return res.status(404).json({ error: "Usuário não encontrado" });
+    }
+
+    req.session.user = {
+      id: user.id_usuario,
+      nome: user.nome_usuario,
+      email: user.email_usuario,
+    };
+
+    console.log("Sessão criada:", req.session);
+
+    res.status(200).json({ message: "Usuário criado com sucesso", id, user: req.session.user });
   } catch (err) {
     if (err.code === "ER_DUP_ENTRY") {
       return res.status(400).json({ error: "Email/CPF/CNH já existentes" });
@@ -75,7 +89,7 @@ export const listUsers = async (req, res) => {
     const usuarios = await getAllUsers();
     console.log(`${usuarios.length} usuários retornados`);
     // usuarios.forEach(u => delete u.senha_usuario);
-    res.json(usuarios); 
+    res.json(usuarios);
   } catch (err) {
     console.error("Erro em listUsers:", err);
     return res.status(500).json({ error: "Erro no servidor" });
