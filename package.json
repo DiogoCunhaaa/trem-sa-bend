@@ -24,6 +24,7 @@
     "express": "^5.1.0",
     "express-session": "^1.18.2",
     "jsonwebtoken": "^9.0.2",
+    "mqtt": "^5.14.1",
     "mysql2": "^3.15.0",
     "nodemailer": "^7.0.10"
   }
