@@ -36,8 +36,28 @@
     <input type="text" id="modelo" placeholder="Modelo" required />
     <button onclick="adicionarTrem()">Adicionar</button>
 
+    <input type="email" id="email_esqueci" placeholder="esqueci a senha" required />
+    <button onclick="esqueciSenha()">esqueci</button>
+
     <script>
       const API_URL = "http://localhost:3333";
+
+      async function esqueciSenha() {
+        const email = document.getElementById("email_esqueci").value;
+
+        const res = await fetch(`${API_URL}/api/users/forgot-password`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            email_usuario: email,
+          }),
+        }); 
+
+        const resultado = await res.json();
+        alert(resultado.message || resultado.error);
+
+        carregarUsuarios();
+      }
 
       async function adicionarTrem() {
         const modelo = document.getElementById("modelo").value;
