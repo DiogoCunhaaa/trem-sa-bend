@@ -6,7 +6,8 @@
   "type": "module",
   "scripts": {
     "test": "test",
-    "start": "node src/index.js"
+    "start": "node src/index.js",
+    "sub": "node src/utils/mqtt/subscriber.js"
   },
   "repository": {
     "type": "git",

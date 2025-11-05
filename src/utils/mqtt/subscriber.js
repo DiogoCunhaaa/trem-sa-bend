@@ -7,22 +7,24 @@ const options = {
   reconnectPeriod: 1000,
 };
 const client = mqtt.connect(brokerURL, options);
+const topics = ["develop/S1", "develop/S2", "develop/S3"];
 
-const topic = "develop/S3";
+let ultimaMensagem = null; // importar em outro arquivo para usar;
 
 client.on("connect", () => {
   console.log(`Conectado ao broker MQTT: ${brokerURL}`);
 
-  client.subscribe(topic, (err) => {
-    if (!err) {
-      console.log(`Inscrito no tópico ${topic}`);
-    } else {
-      console.error("Erro ao se increver", err);
-    }
-  });
+  topics.forEach((topic) =>
+    client.subscribe(topic, (err) => {
+      if (!err) {
+        console.log(`Inscrito no tópico ${topic}`);
+      } else {
+        console.error("Erro ao se increver", err);
+      }
+    })
+  );
 });
 
-export let ultimaMensagem = null; // importar em outro arquivo para usar;
 client.on("message", (topic, message) => {
   console.log(`Mensagem recebida em ${topic}: ${message.toString()}`);
   ultimaMensagem = message.toString();
@@ -39,3 +41,5 @@ client.on("reconnect", () => {
 client.on("close", () => {
   console.log("Conexão MQTT encerrada.");
 });
+
+export { client, ultimaMensagem };
