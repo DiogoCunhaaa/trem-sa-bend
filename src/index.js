@@ -1,9 +1,11 @@
+import dotenv from "dotenv";
+dotenv.config();
+
 import "./utils/mqtt/subscriber.js";
 
 import express from "express";
 import session from "express-session";
 import cors from "cors";
-import dotenv from "dotenv";
 
 import userRoutes from "./routes/user.routes.js";
 import trainRoutes from "./routes/train.routes.js";
@@ -13,7 +15,6 @@ import notificationsRoutes from "./routes/notification.routes.js";
 import maintenanceRoutes from "./routes/maintenance.routes.js";
 
 const app = express();
-dotenv.config();
 
 app.use(
   cors({
