@@ -4,7 +4,7 @@ export const insertTrain = async (train) => {
   const { modelo_trem, id_user } = train;
 
   const [result] = await db.query(
-    "INSERT INTO trens (modelo_trem, fk_id_usuario) VALUES (?, ?)",
+    "INSERT INTO trens (modelo_trem, id_usuario) VALUES (?, ?)",
     [modelo_trem, id_user]
   );
 

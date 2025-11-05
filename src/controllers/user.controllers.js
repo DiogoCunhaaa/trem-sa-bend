@@ -1,7 +1,5 @@
 //user.controller.js
 import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
-import { sendMail } from "../utils/mailer.js";
 import { forgotPassEmail } from "../utils/mail.js";
 import {
   insertUser,
@@ -73,8 +71,6 @@ export const createUser = async (req, res) => {
       email: user.email_usuario,
     };
 
-    forgotPassEmail(email_usuario);
-
     console.log("Sessão criada:", req.session);
 
     res.status(200).json({
@@ -122,7 +118,7 @@ export const forgotPassword = async (req, res) => {
     }
 
     try {
-      await forgotPassEmail(email_usuario, novaSenha);
+      await forgotPassEmail(email_usuario, user.nome_usuario, novaSenha);
     } catch (err) {
       console.error("Erro ao enviar email:", err);
       // Mesmo que o email falhe, a senha foi alterada, então retornamos sucesso
