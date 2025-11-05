@@ -44,3 +44,11 @@ export const editUserById = async (id, { nome_usuario, email_usuario, senha_usua
   );
   return result.affectedRows;
 };
+
+export const updatePasswordByEmail = async (email_usuario, senha_usuario) => {
+  const [result] = await db.query(
+    "UPDATE usuarios SET senha_usuario = ? WHERE email_usuario = ?",
+    [senha_usuario, email_usuario]
+  );
+  return result.affectedRows;
+};
