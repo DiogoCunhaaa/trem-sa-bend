@@ -6,6 +6,7 @@ http://localhost:3333/api/users/delete/:id          -> deletar usuarios pelo id
 http://localhost:3333/api/users/login               -> fazer login 
 http://localhost:3333/api/users/logout              -> fazer logout
 http://localhost:3333/api/users/edit                -> editar usuario
+http://localhost:3333/api/users/forgot-password     -> rota de esqueceu sua senha
 
 //TRAINS//
 
