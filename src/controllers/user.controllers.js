@@ -134,7 +134,7 @@ export const forgotPassword = async (req, res) => {
   }
 };
 
-export const listUsers = async (req, res) => {
+export const listUsers = async (_req, res) => {
   console.log(`${new Date().toISOString()} GET listUsers chamado`);
   try {
     const usuarios = await getAllUsers();

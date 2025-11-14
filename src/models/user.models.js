@@ -27,7 +27,7 @@ export const getUserByEmail = async (email_usuario) => {
     "SELECT * FROM usuarios WHERE email_usuario = ?",
     [email_usuario]
   );
-  return rows[0];
+  return rows[0] || null;
 };
 
 export const deleteUserById = async (id) => {

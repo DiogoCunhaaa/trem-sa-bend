@@ -9,7 +9,7 @@ import { authMiddleware } from "../middlewares/middlewares.js";
 const router = Router();
 
 router.get("/", listTrains);
-router.post("/create", authMiddleware, createTrain);
+router.post("/create", createTrain);
 router.delete("/delete/:id", authMiddleware, deleteTrain);
 
 export default router;
