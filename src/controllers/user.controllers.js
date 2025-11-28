@@ -15,6 +15,7 @@ import {
   cleanCPF,
   generateRandomPassword,
 } from "../middlewares/middlewares.js";
+import { MqttMessage } from "../utils/mqtt/publisher.js";
 
 export const createUser = async (req, res) => {
   console.log(`${new Date().toISOString()} POST createUser chamado`);
@@ -136,6 +137,7 @@ export const forgotPassword = async (req, res) => {
 
 export const listUsers = async (_req, res) => {
   console.log(`${new Date().toISOString()} GET listUsers chamado`);
+  MqttMessage("Trem/velocidade", "mensagem teste de funcao");
   try {
     const usuarios = await getAllUsers();
     console.log(`${usuarios.length} usuários retornados`);

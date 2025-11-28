@@ -7,12 +7,39 @@ const options = {
 };
 
 const client = mqtt.connect(brokerURL, options);
-const topic = "develop/S3";
-
-const message = "Teste do diogo";
 
 client.on("connect", () => {
-  console.log("Conectado ao broker, enviando mensagem...");
-  client.publish(topic, message);
-  client.end();
+  console.log("MQTT conectado com sucesso!");
 });
+
+client.on("error", (err) => {
+  console.error("Erro MQTT:", err);
+});
+
+export function MqttMessage(topic, message) {
+  if (!client.connected) {
+    console.warn("MQTT ainda não conectado, aguardando...");
+
+    client.once("connect", () => {
+      client.publish(topic, message, {}, () => {
+        console.log("Mensagem enviada");
+      });
+    });
+
+    return;
+  }
+
+  client.publish(topic, message, {}, () => {
+    console.log(`Mensagem enviada imediatamente: ${topic}`);
+  });
+}
+
+//const topic = "develop/S3";
+
+//const message = "Teste do diogo";
+//
+//client.on("connect", () => {
+//  console.log("Conectado ao broker, enviando mensagem...");
+//  client.publish(topic, message);
+//  client.end();
+//});

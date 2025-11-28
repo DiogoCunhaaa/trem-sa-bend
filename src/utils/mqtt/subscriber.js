@@ -25,11 +25,6 @@ client.on("connect", () => {
   );
 });
 
-client.on("message", (topic, message) => {
-  console.log(`Mensagem recebida em ${topic}: ${message.toString()}`);
-  ultimaMensagem = message.toString();
-});
-
 client.on("error", (err) => {
   console.error("Erro na conexão MQTT: ", err);
 });
@@ -40,6 +35,11 @@ client.on("reconnect", () => {
 
 client.on("close", () => {
   console.log("Conexão MQTT encerrada.");
+});
+
+client.on("message", (topic, message) => {
+  console.log(`Mensagem recebida em ${topic}: ${message.toString()}`);
+  ultimaMensagem = message.toString();
 });
 
 export { client, ultimaMensagem };
