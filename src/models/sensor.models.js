@@ -22,3 +22,11 @@ export const deleteSensorById = async (id) => {
   ]);
   return result.affectedRows;
 };
+
+export const editSensorById = async (id, { tipo_sensor, valor_sensor }) => {
+  const [result] = await db.query(
+    "UPDATE sensores SET tipo_sensor = ?, valor_sensor = ? WHERE id_sensor = ?",
+    [tipo_sensor, valor_sensor, id]
+  );
+  return result.affectedRows;
+};
