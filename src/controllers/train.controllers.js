@@ -4,26 +4,21 @@ import {
   insertTrain,
   deleteTrainById,
 } from "../models/train.models.js";
-import { getUserByEmail } from "../models/user.models.js";
+import { getUserByEmail, getUserById } from "../models/user.models.js";
 
 export const createTrain = async (req, res) => {
   console.log(`${new Date().toISOString()} POST createUser chamado`);
   try {
     const { modelo_trem, email_usuario } = req.body;
 
-    if (!modelo_trem || !email_usuario) {
-      return res.status(400).json({ error: "Preencha todos os campos" });
-    }
-
     const user = await getUserByEmail(email_usuario);
 
-    if (!user) {
-      return res.status(404).json({ error: "Usuário não encontrado "});
-    }
-    console.log(user);
-    const id = await insertTrain({ modelo_trem, id_user: user.id_usuario });
 
-    console.log("Trem criado:", id);
+    if (!user) {
+      return res.status(400).json({ error: "Usuario nao encontrado" });
+    }
+
+    const id = await insertTrain({ modelo_trem, id_user: user.id_usuario });
 
     return res.status(200).json({ message: "Trem criado com sucesso", id });
   } catch (err) {
@@ -33,9 +28,18 @@ export const createTrain = async (req, res) => {
 };
 
 export const listTrains = async (req, res) => {
+  console.log(`${new Date().toISOString()} GET listTrains chamado`);
   try {
     const trens = await getAllTrains();
-    res.json(trens);
+
+    const trensComUser = await Promise.all(
+      trens.map(async (trem) => {
+        const user = await getUserById(trem.id_usuario);
+        return { ...trem, user };
+      })
+    );
+
+    return res.status(200).json({ trens: trensComUser });
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Erro no servidor" });

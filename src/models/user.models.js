@@ -30,6 +30,14 @@ export const getUserByEmail = async (email_usuario) => {
   return rows[0] || null;
 };
 
+export const getUserById = async (id_usuario) => {
+  const [rows] = await db.query("SELECT * FROM usuarios WHERE id_usuario = ?", [
+    id_usuario,
+  ]);
+
+  return rows[0];
+};
+
 export const deleteUserById = async (id) => {
   const [result] = await db.query("DELETE FROM usuarios WHERE id_usuario = ?", [
     id,
@@ -37,7 +45,10 @@ export const deleteUserById = async (id) => {
   return result.affectedRows;
 };
 
-export const editUserById = async (id, { nome_usuario, email_usuario, senha_usuario }) => {
+export const editUserById = async (
+  id,
+  { nome_usuario, email_usuario, senha_usuario }
+) => {
   const [result] = await db.query(
     "UPDATE usuarios SET nome_usuario = ?, senha_usuario = ? WHERE id_usuario = ?",
     [nome_usuario, senha_usuario, id]

@@ -7,13 +7,13 @@ import {
 
 export const createSensor = async (req, res) => {
   try {
-    const { tipo_sensor, valor_sensor, id_trem } = req.body;
+    const { tipo_sensor, valor_sensor} = req.body;
 
-    if (!tipo_sensor || !valor_sensor || !id_trem) {
+    if (!tipo_sensor || !valor_sensor) {
       return res.status(400).json({ error: "Preencha todos os campos" });
     }
 
-    const id = await insertSensor({ tipo_sensor, valor_sensor, id_trem });
+    const id = await insertSensor({ tipo_sensor, valor_sensor });
 
     return res.status(200).json({ message: "Sensor criado com sucesso", id });
   } catch (err) {
@@ -23,6 +23,7 @@ export const createSensor = async (req, res) => {
 };
 
 export const listSensors = async (_req, res) => {
+  console.log(`${new Date().toISOString()} GET listSensors chamado`);
   try {
     const sensores = await getAllSensors();
     res.json(sensores);

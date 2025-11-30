@@ -1,11 +1,11 @@
 import db from "../db.js";
 
 export const insertSensor = async (sensor) => {
-  const { tipo_sensor, valor_sensor, id_trem } = sensor;
+  const { tipo_sensor, valor_sensor } = sensor;
 
   const [result] = await db.query(
-    "INSERT INTO sensores (tipo_sensor, valor_sensor, id_trem) VALUES (?, ?, ?)",
-    [tipo_sensor, valor_sensor, id_trem]
+    "INSERT INTO sensores (tipo_sensor, valor_sensor) VALUES (?, ?)",
+    [tipo_sensor, valor_sensor]
   );
 
   return result.insertId;
