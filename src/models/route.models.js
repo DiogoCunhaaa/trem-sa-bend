@@ -1,3 +1,4 @@
+// src/models/route.model.js
 import db from "../db.js";
 
 export const insertRoute = async ({ saida_rota, chegada_rota, destino_rota, id_trem }) => {
@@ -12,9 +13,9 @@ export const insertRoute = async ({ saida_rota, chegada_rota, destino_rota, id_t
 
 export const getAllRoutes = async () => {
     const query = `
-        SELECT r.*, t.nome_trem 
+        SELECT r.*, t.modelo_trem AS nome_trem 
         FROM rotas r
-        JOIN trens t ON r.id_trem = t.id_trem
+        LEFT JOIN trens t ON r.id_trem = t.id_trem
     `;
     const [result] = await db.query(query);
     return result;
@@ -22,9 +23,9 @@ export const getAllRoutes = async () => {
 
 export const getRouteById = async (id) => {
     const query = `
-        SELECT r.*, t.nome_trem 
+        SELECT r.*, t.modelo_trem AS nome_trem 
         FROM rotas r
-        JOIN trens t ON r.id_trem = t.id_trem
+        LEFT JOIN trens t ON r.id_trem = t.id_trem
         WHERE r.id_rota = ?
     `;
     const values = [id];
