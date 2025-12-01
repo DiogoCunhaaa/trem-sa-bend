@@ -13,7 +13,6 @@ export const createTrain = async (req, res) => {
 
     const user = await getUserByEmail(email_usuario);
 
-
     if (!user) {
       return res.status(400).json({ error: "Usuario nao encontrado" });
     }
@@ -47,6 +46,7 @@ export const listTrains = async (req, res) => {
 };
 
 export const deleteTrain = async (req, res) => {
+  console.log(`${new Date().toISOString()} DELETE deleteTrain chamado`);
   try {
     const { id } = req.params;
     const affectedRows = await deleteTrainById(id);
