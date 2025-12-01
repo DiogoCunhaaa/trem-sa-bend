@@ -12,7 +12,10 @@ export const insertMaintenance = async ({ mensagem_manutencao, nome_manutencao, 
 
 export const getAllMaintenance = async () => {
     const query = `
-        SELECT m.*, t.nome_trem, u.nome_usuario 
+        SELECT 
+            m.*, 
+            t.modelo_trem AS nome_trem, 
+            u.nome_usuario 
         FROM manutencao m
         JOIN trens t ON m.id_trem = t.id_trem
         JOIN usuarios u ON m.id_usuario = u.id_usuario
@@ -23,7 +26,10 @@ export const getAllMaintenance = async () => {
 
 export const getMaintenanceById = async (id) => {
     const query = `
-        SELECT m.*, t.nome_trem, u.nome_usuario 
+        SELECT 
+            m.*, 
+            t.modelo_trem AS nome_trem, 
+            u.nome_usuario 
         FROM manutencao m
         JOIN trens t ON m.id_trem = t.id_trem
         JOIN usuarios u ON m.id_usuario = u.id_usuario
@@ -36,7 +42,10 @@ export const getMaintenanceById = async (id) => {
 
 export const getMaintenanceByTrain = async (id_trem) => {
     const query = `
-        SELECT m.*, t.nome_trem, u.nome_usuario 
+        SELECT 
+            m.*, 
+            t.modelo_trem AS nome_trem, 
+            u.nome_usuario 
         FROM manutencao m
         JOIN trens t ON m.id_trem = t.id_trem
         JOIN usuarios u ON m.id_usuario = u.id_usuario

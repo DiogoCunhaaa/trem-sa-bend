@@ -12,8 +12,8 @@ const router = Router();
 
 router.post("/create", createMaintenance);
 router.get("/", getMaintenances);
-router.get("/:id", getMaintenance);
 router.get("/train/:id_trem", getMaintenancesByTrain);
+router.get("/:id", getMaintenance);
 router.delete("/delete/:id", deleteMaintenanceById);
 router.put("/update/:id", updateMaintenanceById);
 
