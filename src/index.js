@@ -15,6 +15,7 @@ import notificationsRoutes from "./routes/notification.routes.js";
 import maintenanceRoutes from "./routes/maintenance.routes.js";
 import stationsRoutes from "./routes/stations.routes.js";
 import reportRoutes from "./routes/reports.routes.js";
+import routeRoutes from "./routes/route.routes.js"; 
 
 const app = express();
 
@@ -24,6 +25,7 @@ app.use(
     credentials: true,
   })
 );
+
 app.use(
   session({
     secret: process.env.SESSION_SECRET,
@@ -37,6 +39,7 @@ app.use(
     },
   })
 );
+
 app.use(express.json());
 app.use(express.static("./public"));
 
@@ -48,6 +51,7 @@ app.use("/api/notifications", notificationsRoutes);
 app.use("/api/maintenance", maintenanceRoutes);
 app.use("/api/stations", stationsRoutes);
 app.use("/api/reports", reportRoutes);
+app.use("/api/routes", routeRoutes); // <-- ADICIONADO
 
 app.listen(process.env.PORT, () => {
   console.log(`Backend running in http://localhost:${process.env.PORT}`);

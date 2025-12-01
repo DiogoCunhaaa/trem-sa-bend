@@ -1,19 +1,20 @@
-import { Router } from "express";
+// src/routes/route.routes.js
+import express from "express";
 import {
-  createRoute,
-  getRoutes,
-  getRoute,
-  deleteRouteById,
-  updateRouteById
+    createRoute,
+    getRoutes,
+    getRoute,
+    deleteRouteById,
+    updateRouteById
 } from "../controllers/route.controllers.js";
-import { authMiddleware } from "../middlewares/middlewares.js";
 
-const router = Router();
+const router = express.Router();
 
-router.post("/create", authMiddleware, createRoute);
-router.get("/", authMiddleware, getRoutes);
-router.get("/:id", authMiddleware, getRoute);
-router.delete("/delete/:id", authMiddleware, deleteRouteById);
-router.put("/update/:id", authMiddleware, updateRouteById);
+// ROTAS
+router.get("/", getRoutes);                    // GET /api/routes
+router.get("/:id", getRoute);                  // GET /api/routes/:id
+router.post("/create", createRoute);           // POST /api/routes/create
+router.put("/update/:id", updateRouteById);    // PUT /api/routes/update/:id
+router.delete("/delete/:id", deleteRouteById); // DELETE /api/routes/delete/:id
 
 export default router;
