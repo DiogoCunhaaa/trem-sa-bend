@@ -55,7 +55,7 @@ export const editSensor = async (req, res) => {
   try {
     const { id, tipo_sensor, valor_sensor } = req.body;
     if (!id) {
-      return res.status(401).json({ error: "Trem  não encontrado" });
+      return res.status(401).json({ error: "Sensor  não encontrado" });
     }
     if (!tipo_sensor || !valor_sensor) {
       return res.status(400).json({ error: "Preencha todos os campos" });

@@ -13,6 +13,7 @@ import alertRoutes from "./routes/alert.routes.js";
 import sensorRoutes from "./routes/sensor.routes.js";
 import notificationsRoutes from "./routes/notification.routes.js";
 import maintenanceRoutes from "./routes/maintenance.routes.js";
+import stationsRoutes from "./routes/stations.routes.js";
 
 const app = express();
 
@@ -44,6 +45,7 @@ app.use("/api/alerts", alertRoutes);
 app.use("/api/sensors", sensorRoutes);
 app.use("/api/notifications", notificationsRoutes);
 app.use("/api/maintenance", maintenanceRoutes);
+app.use("/api/stations", stationsRoutes);
 
 app.listen(process.env.PORT, () => {
   console.log(`Backend running in http://localhost:${process.env.PORT}`);
